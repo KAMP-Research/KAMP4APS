@@ -68,6 +68,7 @@ public class APSAbstractChangePropagationAnalysis {
 			moduleChanges.addAll(addAllWithSeedAndReturnModules(changes, iface, changePropagation));		
 		}
 		
+		// "module rule"
 		while (!moduleChanges.isEmpty()) {
 			Module module = moduleChanges.remove();
 			List<Entity> moduleChildren = APSAbstractArchitectureModelLookup.lookupChildren(module);
