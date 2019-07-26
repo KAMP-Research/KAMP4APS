@@ -334,6 +334,14 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PowerWiring" eSuperTypes="#//StructureRepository/Structure"/>
     <eClassifiers xsi:type="ecore:EClass" name="LogicalWiring" eSuperTypes="#//StructureRepository/Structure"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Stamp" eSuperTypes="#//StructureRepository/Structure">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="stampingCylinder" lowerBound="1"
+          eType="#//ComponentRepository/MonostableCylinder"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="slidingCylinder" lowerBound="1"
+          eType="#//ComponentRepository/BistableCylinder"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="sensors" upperBound="-1"
+          eType="#//ComponentRepository/Sensor"/>
+    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="ModuleRepository" nsURI="edu.kit.ipd.sdq.kaps.xppu.modulerepository"
       nsPrefix="ModuleRepository">
