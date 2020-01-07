@@ -3,6 +3,7 @@
 package edu.kit.ipd.sdq.kamp4aps.model.aPS.ModuleRepository.impl;
 
 import edu.kit.ipd.sdq.kamp4aps.model.aPS.ModuleRepository.*;
+import edu.kit.ipd.sdq.kamp4aps.model.aPS.ModuleRepository.Module;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;

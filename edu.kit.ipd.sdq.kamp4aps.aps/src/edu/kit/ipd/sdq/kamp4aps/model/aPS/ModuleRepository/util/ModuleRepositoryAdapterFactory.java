@@ -3,7 +3,7 @@
 package edu.kit.ipd.sdq.kamp4aps.model.aPS.ModuleRepository.util;
 
 import edu.kit.ipd.sdq.kamp4aps.model.aPS.ModuleRepository.*;
-
+import edu.kit.ipd.sdq.kamp4aps.model.aPS.ModuleRepository.Module;
 import edu.kit.ipd.sdq.kamp4aps.model.basic.Entity;
 import edu.kit.ipd.sdq.kamp4aps.model.basic.Identifier;
 import edu.kit.ipd.sdq.kamp4aps.model.basic.NamedElement;
