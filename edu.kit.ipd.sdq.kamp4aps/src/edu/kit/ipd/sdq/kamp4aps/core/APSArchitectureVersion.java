@@ -22,6 +22,7 @@ import edu.kit.ipd.sdq.kamp4iec.model.IECRepository.Repository;
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.AbstractKAMP4aPSModificationRepository;
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.KAMP4aPSModificationRepository;
 import edu.kit.ipd.sdq.kamp4aps.model.aPS.Plant;
+import edu.kit.ipd.sdq.kamp4aps.model.aPS.apsFactory;
 
 /**
  * This class creates the structural and non-structural
@@ -67,46 +68,49 @@ public class APSArchitectureVersion extends AbstractArchitectureVersion<Abstract
 		if (params.fieldOfActivityRepository == null)
 			params.fieldOfActivityRepository = KAMP4aPSFieldofactivityannotationsFactory.eINSTANCE.
 					createFieldOfActivityAnnotationRepository();
+		this._fieldOfActivityRepository = params.fieldOfActivityRepository;
+		
+		if (params.aPSPlant == null)
+			params.aPSPlant = apsFactory.eINSTANCE.createPlant();
+		this._aPSPlant = params.aPSPlant;
 		
 		if(params.deploymentContextRepository == null)
 			params.deploymentContextRepository = DeploymentContextFactory.eINSTANCE.createDeploymentContextRepository();
-		_deploymentContextRepository = params.deploymentContextRepository;
+		this._deploymentContextRepository = params.deploymentContextRepository;
 		
 		if (params.iecRepository == null) {
-			_IECRepository = IECRepositoryFactory.eINSTANCE.
+			params.iecRepository = IECRepositoryFactory.eINSTANCE.
 					createRepository();
 		}
 		this._IECRepository = params.iecRepository;
+		
 		if (params.configuration == null) {
-			_configuration = IECModelFactory.eINSTANCE.
+			params.configuration = IECModelFactory.eINSTANCE.
 					createConfiguration();
 		}
 		this._configuration = params.configuration;
+		
 		if (params.iecFieldOfActivityRepository == null) {
-			_iecFieldOfActivityRepository = IECFieldOfActivityAnnotationsFactory.eINSTANCE.
+			params.iecFieldOfActivityRepository = IECFieldOfActivityAnnotationsFactory.eINSTANCE.
 					createIECFieldOfActivityAnnotationsRepository();
 		}
-		this._iecModificationMarkRepository = params.iecModificationMarkRepository;
+		this._iecFieldOfActivityRepository = params.iecFieldOfActivityRepository;
+		
 		if (params.iecModificationMarkRepository == null) {
-			_iecModificationMarkRepository = IECModificationmarksFactory.eINSTANCE.
+			params.iecModificationMarkRepository = IECModificationmarksFactory.eINSTANCE.
 					createIECModificationRepository();
 		}
+		this._iecModificationMarkRepository = params.iecModificationMarkRepository;
+		
 		if (params.hmiRepository == null) {
-			_hmiRepository = Kamp4hmiModelFactory.eINSTANCE.createRepository();
+			params.hmiRepository = Kamp4hmiModelFactory.eINSTANCE.createRepository();
 		}
 		this._hmiRepository = params.hmiRepository;	
+		
 		if (params.hmiModificationMarksRepository == null) {
-			_hmiModificationRepository = HMIModificationmarksFactory.eINSTANCE.createHMIModificationMarksRepository();
+			params.hmiModificationMarksRepository = HMIModificationmarksFactory.eINSTANCE.createHMIModificationMarksRepository();
 		}
 		this._hmiModificationRepository = params.hmiModificationMarksRepository;	
-		
-		_fieldOfActivityRepository = params.fieldOfActivityRepository;
-		_aPSPlant = params.aPSPlant;
-		_deploymentContextRepository = params.deploymentContextRepository;
-		_IECRepository = params.iecRepository;
-		_configuration = params.configuration;
-		_iecFieldOfActivityRepository = params.iecFieldOfActivityRepository;
-		_iecModificationMarkRepository = params.iecModificationMarkRepository;
 	}
 
 	public FieldOfActivityAnnotationRepository getFieldOfActivityRepository() {

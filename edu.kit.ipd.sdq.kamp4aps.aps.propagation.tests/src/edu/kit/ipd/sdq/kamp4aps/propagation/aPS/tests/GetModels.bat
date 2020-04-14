@@ -1,0 +1,2 @@
+xcopy D:\0_Praktikum_ISE\eclipse2\runtime-New_configuration\PropagationModels D:\0_Praktikum_ISE_Offizielle_Repos\KAMP4APS\edu.kit.ipd.sdq.kamp4aps.aps.tests\src\edu\kit\ipd\sdq\kamp4aps\propagation\aPS\tests /S /Y
+pause

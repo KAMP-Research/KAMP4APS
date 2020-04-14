@@ -30,6 +30,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: SDQ
 Export-Package: edu.kit.ipd.sdq.kamp4aps.activator,
  edu.kit.ipd.sdq.kamp4aps.core,
+ edu.kit.ipd.sdq.kamp4aps.core.changepropagation,
  edu.kit.ipd.sdq.kamp4aps.core.derivation,
  edu.kit.ipd.sdq.kamp4aps.ui
 Import-Package: edu.kit.ipd.sdq.kamp4aps.model.DeploymentContext,
