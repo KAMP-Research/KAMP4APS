@@ -42,7 +42,7 @@ import edu.kit.ipd.sdq.kamp4aps.model.basic.Entity;
 class PropagationTest {
 
 	private final String currentPath = Paths.get("").toAbsolutePath().toString();
-	private final String pathToModels = "\\src\\edu\\kit\\ipd\\sdq\\kamp4aps\\propagation\\aPS\\tests\\";
+	private final String pathToModels = "/src/edu/kit/ipd/sdq/kamp4aps/propagation/aPS/tests/";
 	private final String modelName = "My.aps";
 	private final String seedName = "ModificationSeed";
 	private final String expectedModificationsName = "ExpectedModifications";
