@@ -170,6 +170,7 @@ class PropagationTest {
 	}
 	
 	private String[] loadFile(String file) {
+		System.out.println("Loading file: " + file);
 		ArrayList<String> result = new ArrayList<String>();
 	    BufferedReader reader;
 		try {

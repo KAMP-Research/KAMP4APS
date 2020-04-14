@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aPS:Plant xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ComponentRepository="edu.kit.ipd.sdq.kaps.xppu.componentrepository" xmlns:InterfaceRepository="edu.kit.ipd.sdq.kaps.xppu.interfacerepository" xmlns:StructureRepository="edu.kit.ipd.sdq.kaps.xppu.structurerepository" xmlns:aPS="edu.kit.ipd.sdq.kamp4aps.aps" id="_LlSC8GdwEeqTZrf5UuWZZg" Name="Plant">
+  <structures xsi:type="StructureRepository:Conveyor" id="_uTi4EWkAEeqQSezV_bD6CA">
+    <components xsi:type="ComponentRepository:RegularRamp" id="_KJH30mkBEeqQSezV_bD6CA" Name="Ramp" connectedInterfaces="__oysqWkAEeqQSezV_bD6CA" screwing_base="__oysqWkAEeqQSezV_bD6CA" screwing_component="__oysqWkAEeqQSezV_bD6CA"/>
+    <belts id="_zetVmGkAEeqQSezV_bD6CA">
+      <frame id="_2Bwg4GkAEeqQSezV_bD6CA" Name="Frame" connectedInterfaces="__oysqWkAEeqQSezV_bD6CA"/>
+      <rubberBand id="_2dQKEWkAEeqQSezV_bD6CA"/>
+    </belts>
+  </structures>
+  <interfaceRepository id="_-VpCqWkAEeqQSezV_bD6CA">
+    <allInterfacesInPlant xsi:type="InterfaceRepository:Screwing" id="__oysqWkAEeqQSezV_bD6CA" Name="ScrewingRampToFrame" parentElement="_2Bwg4GkAEeqQSezV_bD6CA _KJH30mkBEeqQSezV_bD6CA"/>
+  </interfaceRepository>
+  <componentRepository id="_l-AFQGq0Eeq7vKkEpx3brA" Name="Components" allComponentsInPlant="_zetVmGkAEeqQSezV_bD6CA _2Bwg4GkAEeqQSezV_bD6CA _KJH30mkBEeqQSezV_bD6CA _2dQKEWkAEeqQSezV_bD6CA"/>
+</aPS:Plant>
