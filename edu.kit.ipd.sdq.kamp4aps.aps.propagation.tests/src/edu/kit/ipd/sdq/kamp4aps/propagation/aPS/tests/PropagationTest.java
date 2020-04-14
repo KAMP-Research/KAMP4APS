@@ -49,17 +49,17 @@ class PropagationTest {
 
 	@Test
 	void testExampleOne() {
-		testChangePropagationOnModel("Model_1\\");
+		testChangePropagationOnModel("Model_1/");
 	}
 	
 	@Test
 	void testExampleTwo() {
-		testChangePropagationOnModel("Model_2\\");
+		testChangePropagationOnModel("Model_2/");
 	}
 	
 	@Test
 	void testExampleThree() {
-		testChangePropagationOnModel("Model_3\\");
+		testChangePropagationOnModel("Model_3/");
 	}
 	
 	
