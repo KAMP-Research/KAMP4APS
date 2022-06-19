@@ -112,6 +112,52 @@ public class APSArchitectureVersion extends AbstractArchitectureVersion<Abstract
 		}
 		this._hmiModificationRepository = params.hmiModificationMarksRepository;	
 	}
+	
+	public APSArchitectureVersion(String name, FieldOfActivityAnnotationRepository fieldOfActivityRepository,
+			AbstractKAMP4aPSModificationRepository<?> modificationMarkRepository, Plant aPSPlant, DeploymentContextRepository deploymentContextRepository, Repository iecRepository, 
+			Configuration configuration, IECFieldOfActivityAnnotationsRepository iecFieldOfActivityRepository,
+			IECModificationRepository iecModificationMarkRepository) {
+		super(name, modificationMarkRepository);
+		// Some of the files describing the architecture might not exist; prevent NullPointer
+		// in propagation algorithm by setting newly created objects (whose EReferences are
+		// instantiated with empty collections, so the algorithm can handle them)
+		
+		if (fieldOfActivityRepository == null)
+			fieldOfActivityRepository = KAMP4aPSFieldofactivityannotationsFactory.eINSTANCE.
+					createFieldOfActivityAnnotationRepository();
+		
+		if(deploymentContextRepository == null)
+			deploymentContextRepository = DeploymentContextFactory.eINSTANCE.createDeploymentContextRepository();
+		_deploymentContextRepository = deploymentContextRepository;
+		
+		if (iecRepository == null) {
+			_IECRepository = IECRepositoryFactory.eINSTANCE.
+					createRepository();
+		}
+		this._IECRepository = iecRepository;
+		if (configuration == null) {
+			_configuration = IECModelFactory.eINSTANCE.
+					createConfiguration();
+		}
+		this._configuration = configuration;
+		if (iecFieldOfActivityRepository == null) {
+			_iecFieldOfActivityRepository = IECFieldOfActivityAnnotationsFactory.eINSTANCE.
+					createIECFieldOfActivityAnnotationsRepository();
+		}
+		this._iecModificationMarkRepository = iecModificationMarkRepository;
+		if (iecModificationMarkRepository == null) {
+			_iecModificationMarkRepository = IECModificationmarksFactory.eINSTANCE.
+					createIECModificationRepository();
+		}
+		
+		_fieldOfActivityRepository = fieldOfActivityRepository;
+		_aPSPlant = aPSPlant;
+		_deploymentContextRepository = deploymentContextRepository;
+		_IECRepository = iecRepository;
+		_configuration = configuration;
+		_iecFieldOfActivityRepository = iecFieldOfActivityRepository;
+		_iecModificationMarkRepository = iecModificationMarkRepository;
+	}
 
 	public FieldOfActivityAnnotationRepository getFieldOfActivityRepository() {
 		return _fieldOfActivityRepository;
