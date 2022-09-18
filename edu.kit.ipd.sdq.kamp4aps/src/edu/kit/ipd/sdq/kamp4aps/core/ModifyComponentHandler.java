@@ -9,7 +9,9 @@ import java.util.Set;
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.ChangePropagationDueToHardwareChange;
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.KAMP4aPSModificationmarksFactory;
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.ModifyComponent;
+import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.ModifyInterface;
 import edu.kit.ipd.sdq.kamp4aps.model.aPS.ComponentRepository.Component;
+import edu.kit.ipd.sdq.kamp4aps.model.aPS.ComponentRepository.RegularRamp;
 import edu.kit.ipd.sdq.kamp4aps.model.aPS.InterfaceRepository.Interface;
 
 public class ModifyComponentHandler {
@@ -91,7 +93,10 @@ public class ModifyComponentHandler {
 		changePropagationDueToHardwareChange.getComponentModifications().addAll(modifyComponents);	
 	}
 	
-	public static void initModifyComponentsBasedOnInterfaces (Map<Interface, Set<Component>> componentsToBeMarked, ChangePropagationDueToHardwareChange changePropagationDueToHardwareChange, Collection<Interface> initialMarkedInterfaces) {
+	public static void initModifyComponentsBasedOnInterfaces (
+			Map<Interface, Set<Component>> componentsToBeMarked, 
+			ChangePropagationDueToHardwareChange changePropagationDueToHardwareChange,
+			Collection<Interface> initialMarkedInterfaces) {
 		List<ModifyComponent<Component>> modifyComponents = null;
 		int mapHash;
 		do {
@@ -101,5 +106,35 @@ public class ModifyComponentHandler {
 			ModifyComponentHandler.addToModifyComponentsToChangePropagation(modifyComponents, changePropagationDueToHardwareChange);
 		} while (mapHash != componentsToBeMarked.hashCode());
 	}
+	
+	public static void addModifyComponentToList(Component component, ChangePropagationDueToHardwareChange changePropagationDueToHardwareChange) {
+		ModifyComponent<Component> modifyRamp = KAMP4aPSModificationmarksFactory.eINSTANCE.createModifyComponent();
+		modifyRamp.setAffectedElement(component);
+		modifyRamp.setToolderived(true);
+		modifyRamp.setId("Modify " + component.getId());
+		changePropagationDueToHardwareChange.getComponentModifications().add(modifyRamp);
+	}
+
+
+	public static void initModifyInterfacesBasedOnComponents(
+			Map<Component, Set<Interface>> interfacesToBeMarked,
+			ChangePropagationDueToHardwareChange changePropagationDueToHardwareChange,
+			Collection<RegularRamp> initialMarkedComponents) {
+		List<ModifyInterface<Interface>> modifyInterfaces = null;
+		int mapHash;
+		do {
+			mapHash = interfacesToBeMarked.hashCode();
+			interfacesToBeMarked = APSArchitectureModelLookup.lookUpInterfacesOfComponents(initialMarkedComponents, changePropagationDueToHardwareChange);
+			modifyInterfaces = ModifyInterfaceHandler.createModifyInterfaceFromAffectedInterfaces(interfacesToBeMarked);
+			ModifyInterfaceHandler.addToModifyInterfacesToChangePropagation(modifyInterfaces, changePropagationDueToHardwareChange);
+		} while(mapHash != interfacesToBeMarked.hashCode());
+		
+	}
+
+
+
+
+
+
 
 }

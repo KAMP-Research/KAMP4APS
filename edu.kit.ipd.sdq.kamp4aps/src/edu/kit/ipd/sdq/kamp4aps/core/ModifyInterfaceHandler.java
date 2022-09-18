@@ -97,6 +97,27 @@ public class ModifyInterfaceHandler {
 		changePropagationDueToHardwareChange.getInterfaceModifications().addAll(plainModifyInterfaces);
 	}
 	
+	public static List<ModifyInterface<Interface>> createModifyInterfaceFromAffectedInterfaces(
+			Map<Component, Set<Interface>> interfacesToBeMarked) {
+			List<ModifyInterface<Interface>> modifyInterfaces = new ArrayList<ModifyInterface<Interface>>();
+			for(Map.Entry<Component, Set<Interface>> interfacesToBeMarkedEntry : interfacesToBeMarked.entrySet()){
+				for(Interface interfac : interfacesToBeMarkedEntry.getValue()){
+					ModifyInterface<Interface> modifyInterface = KAMP4aPSModificationmarksFactory.eINSTANCE.createModifyInterface();
+					modifyInterface.setToolderived(true);
+					modifyInterface.setAffectedElement(interfac);
+					modifyInterface.getCausingElements().add(interfacesToBeMarkedEntry.getKey());
+					modifyInterface.setId(interfac.getId() + "_" + interfac.getName());
+					modifyInterfaces.add(modifyInterface);
+				}
+			}
+			return modifyInterfaces;		
+	}
+	
+	public static void addToModifyInterfacesToChangePropagation(List<ModifyInterface<Interface>> modifyInterfaces,
+			ChangePropagationDueToHardwareChange changePropagationDueToHardwareChange) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }
