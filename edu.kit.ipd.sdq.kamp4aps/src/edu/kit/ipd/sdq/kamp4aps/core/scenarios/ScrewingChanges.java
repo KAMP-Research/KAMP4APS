@@ -8,6 +8,7 @@ import java.util.Set;
 
 import edu.kit.ipd.sdq.kamp4aps.core.APSArchitectureModelLookup;
 import edu.kit.ipd.sdq.kamp4aps.core.APSArchitectureVersion;
+import edu.kit.ipd.sdq.kamp4aps.core.ModifyComponentHandler;
 import edu.kit.ipd.sdq.kamp4aps.core.changepropagation.InterfaceChanges;
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.ChangePropagationDueToHardwareChange;
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.KAMP4aPSModificationmarksFactory;
@@ -49,8 +50,8 @@ public class ScrewingChanges extends InterfaceChanges {
 		do {
 			mapHash = componentsToBeMarked.hashCode();
 			componentsToBeMarked = APSArchitectureModelLookup.lookUpParentComponentsOfInterfaces(initialMarkedScrewings, changePropagationDueToHardwareChange);
-			modifyComponents = createModifyComponentsFromAffectedComponents(componentsToBeMarked);
-			addToModifyComponentsToChangePropagation(modifyComponents, changePropagationDueToHardwareChange);
+			modifyComponents = ModifyComponentHandler.createModifyComponentsFromAffectedComponents(componentsToBeMarked);
+			ModifyComponentHandler.addToModifyComponentsToChangePropagation(modifyComponents, changePropagationDueToHardwareChange);
 		} while (mapHash != componentsToBeMarked.hashCode());
 	}
 	
