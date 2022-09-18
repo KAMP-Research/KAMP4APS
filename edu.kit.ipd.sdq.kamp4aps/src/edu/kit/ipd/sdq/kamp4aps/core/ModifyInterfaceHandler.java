@@ -13,6 +13,7 @@ import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.ChangePropagatio
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.KAMP4aPSModificationmarksFactory;
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.ModifyComponent;
 import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.ModifyInterface;
+import edu.kit.ipd.sdq.kamp4aps.model.KAMP4aPSModificationmarks.ModifyMicroSwitchModule;
 import edu.kit.ipd.sdq.kamp4aps.model.aPS.ComponentRepository.Component;
 import edu.kit.ipd.sdq.kamp4aps.model.aPS.InterfaceRepository.Interface;
 
@@ -118,6 +119,21 @@ public class ModifyInterfaceHandler {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public static void createIntorfacesFromMicroSwitchModules(ChangePropagationDueToHardwareChange changePropagationDueToHardwareChange,
+			List<Interface> interfaces, ModifyMicroSwitchModule modifyMicroSwitchModule) {
+		List<ModifyInterface<Interface>> modifyInterfaces = new ArrayList<ModifyInterface<Interface>>();
+		for(Interface i : interfaces){
+			createNewModifyInterface(i, changePropagationDueToHardwareChange);
+		}
+		
+		changePropagationDueToHardwareChange.getMicroSwitchModuleModifications().add(modifyMicroSwitchModule);
+		modifyInterfaces.forEach(mInterface -> {
+			changePropagationDueToHardwareChange.getInterfaceModifications().add(mInterface);
+		});
+
+	}
+	
 
 
 }
