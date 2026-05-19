@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/edu.kit.ipd.sdq.kamp4aps.feature_1.0.0.qualifier.jar" id="edu.kit.ipd.sdq.kamp4aps.feature" version="1.0.0.qualifier">
+      <category name="kamp4aps_category"/>
+   </feature>
+   <category-def name="kamp4aps_category" label="KAMP4APS Addon"/>
+</site>
