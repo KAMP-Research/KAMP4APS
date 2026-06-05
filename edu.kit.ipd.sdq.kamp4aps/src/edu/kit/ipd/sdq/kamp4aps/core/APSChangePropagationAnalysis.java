@@ -86,10 +86,6 @@ public class APSChangePropagationAnalysis implements AbstractChangePropagationAn
 
 	private ChangePropagationDueToHardwareChange changePropagationDueToHardwareChange;
 	private IECChangePropagationDueToDataDependency changePropagationDueToDataDependency;
-	private SensorChanges scenarioZero;
-	private SwitchChanges scenarioOne;
-	private BusChanges scenarioTwo;
-	private SignalInterfacePropagation siPropagation;
 	
 	@Override
 	public void runChangePropagationAnalysis(APSArchitectureVersion version) {
@@ -102,18 +98,8 @@ public class APSChangePropagationAnalysis implements AbstractChangePropagationAn
 			it.remove();
 		}
 		
-		// Calculate
-		do {
-			changePropagationDueToHardwareChange.setChanged(false);
-			calculateAndMarkFromStructurePropagation(version);
-			calculateAndMarkFromModulePropagation(version);
-			calculateAndMarkFromComponentPropagation(version);
-			calculateAndMarkFromInterfacePropagation(version);
-			addAllChangePropagations(version);
-		} while(changePropagationDueToHardwareChange.isChanged());
-//		calculateAndMarkRampChanges(version);
-//		calculateAndMarkScrewingChanges(version);
-		
+		APSAbstractChangePropagationAnalysis.abstractChangePropagationAnalysis(version, changePropagationDueToHardwareChange);
+		addAllChangePropagations(version);
 		// Update
 		
 		IECArchitectureVersion iecVersion = APSArchitectureVersion.extractIECArchitecture(version);
@@ -127,128 +113,6 @@ public class APSChangePropagationAnalysis implements AbstractChangePropagationAn
 			
 			iecAnalysis.runChangePropagationAnalysis(iecVersion);
 		}
-	}
-
-	private void calculateAndMarkScrewingChanges(APSArchitectureVersion version) {
-		ScrewingChanges sc = new ScrewingChanges(version);
-		sc.addInitialMarkedScrewingsToList(changePropagationDueToHardwareChange);
-		sc.calculateAndMarkAffectedComponentsByScrewingChange(changePropagationDueToHardwareChange);
-		sc.calclulateAndMarkAffectedModulesByScrewingChange(changePropagationDueToHardwareChange);
-	}
-
-	private void calculateAndMarkRampChanges(APSArchitectureVersion version) {
-		RampChange rc = new RampChange(version);
-		rc.addInitialMarkedModulesToList(changePropagationDueToHardwareChange);
-		rc.calculateAndMarkAffectedInterfacesByRampChange(changePropagationDueToHardwareChange);
-		rc.calculateAndMarkToFramePropagation(changePropagationDueToHardwareChange);
-	}
-
-	private void calculateAndMarkFromStructurePropagation(APSArchitectureVersion version) {
-		StructureChanges sc = new StructureChanges(version);
-		sc.addInitialMarkedStructuresToList(changePropagationDueToHardwareChange);
-		sc.calculateAndMarkToModulePropagation(changePropagationDueToHardwareChange);
-		sc.calculateAndMarkToComponentPropagation(changePropagationDueToHardwareChange);
-	}
-	
-	private void calculateAndMarkFromModulePropagation(APSArchitectureVersion version){
-		ModuleChanges mc = new ModuleChanges(version);
-		mc.addInitialMarkedModulesToList(changePropagationDueToHardwareChange);
-		mc.calculateAndMarkToModulePropagation(changePropagationDueToHardwareChange);
-		mc.calculateAndMarkToComponentPropagation(changePropagationDueToHardwareChange);
-		mc.calculateAndMarkToInterfacePropagation(changePropagationDueToHardwareChange);
-	}
-	
-	private void calculateAndMarkFromComponentPropagation(APSArchitectureVersion version){
-		ComponentChanges cc = new ComponentChanges(version);
-		cc.addInitialMarkedModulesToList(changePropagationDueToHardwareChange);
-		cc.calculateAndMarkToInterfacePropagation(changePropagationDueToHardwareChange);
-	}
-	
-	private void calculateAndMarkFromInterfacePropagation(APSArchitectureVersion version){
-		InterfaceChanges ic = new InterfaceChanges(version);
-		ic.addInitialMarkedInterfacesToList(changePropagationDueToHardwareChange);
-		ic.calculateAndMarkToModulePropagation(changePropagationDueToHardwareChange);
-		ic.calculateAndMarkToComponentPropagation(changePropagationDueToHardwareChange);
-		ic.flattenAllModifyInterfaces(changePropagationDueToHardwareChange);
-		ic.calculateAndMarkToGlobalVariablePropagation(changePropagationDueToHardwareChange, changePropagationDueToDataDependency);
-	}
-
-	/**
-	 * Scenario 0
-	 * Sensor Change
-	 */
-	protected void calculateAndMarkFromSensorPropagration(APSArchitectureVersion version) {
-		scenarioZero = new SensorChanges(version);
-		Collection<SignalInterface> signalInterfaceToChange = new ArrayList<SignalInterface>();
-		Collection<PhysicalConnection> physicalConnectionToChange = new ArrayList<PhysicalConnection>();
-		addSensorModifications(signalInterfaceToChange, physicalConnectionToChange);
-	}
-
-		private void addSensorModifications(Collection<SignalInterface> signalInterfaceToChange,
-				Collection<PhysicalConnection> physicalConnectionToChange) {
-			for (Sensor sensor : scenarioZero.getInitialMarkedSensors()) {
-				scenarioZero.addSensorModificationToChangePropagation(sensor, 
-						changePropagationDueToHardwareChange,
-						signalInterfaceToChange,
-						physicalConnectionToChange);
-			}
-		}
-	
-	/**
-	 * Scenario 1
-	 * Replace MicroSwitches with Potentiometers
-	 */
-	protected void calculateAndMarkReplacementOfMicroSwitch(APSArchitectureVersion version) {
-		scenarioOne = new SwitchChanges(version);
-		addMicroSwitchModifications();
-	}
-
-		private void addMicroSwitchModifications() {
-			for (MicroswitchModule microswitchModule : scenarioOne.getInitialMarkedMicroswitchModules()) {
-				scenarioOne.addMicroswitchModificationToChangePropagation(microswitchModule, 
-						changePropagationDueToHardwareChange);			
-			}
-		}
-
-	/**
-	 * Scenario 2
-	 * BusChange
-	 */
-	protected void calculateAndMarkBusBoxChange(APSArchitectureVersion version){
-		scenarioTwo = new BusChanges(version);
-		addBusBoxModifications(version);
-	}
-
-		private void addBusBoxModifications(APSArchitectureVersion version) {
-			BusComponentsParams params = APSArchitectureModelLookup.lookUpChangesBasedOnBusModification(version, scenarioTwo.getInitialMarkedBusBoxes());
-			for(BusBox busBox : params.busBoxesToChange){
-				ModifyBusBox modifyBusBox = scenarioTwo.createNewModifyBusBox(busBox);
-				changePropagationDueToHardwareChange.getBusBoxModifications().add(modifyBusBox);
-			}
-			for(BusMaster busMaster : params.busMastersToChange){
-				ModifyBusMaster modifyBusMaster = scenarioTwo.createNewModifyBusMaster(busMaster, params.causingElementsOfBusMaster.get(busMaster));
-				changePropagationDueToHardwareChange.getBusMasterModifications().add(modifyBusMaster);
-			}
-			for(BusSlave busSlave : params.busSlavesToChange){
-				ModifyBusSlave modifyBusSlave = scenarioTwo.createNewModifyBusSlave(busSlave, params.causingElementsOfBusSlave.get(busSlave));
-				changePropagationDueToHardwareChange.getBusSlaveModifications().add(modifyBusSlave);
-			}
-			for(BusCable busCable : params.busCablesToChange){
-				ModifyBusCable modifyBusCable = scenarioTwo.createNewModifyBusCable(busCable, params.causingElementsOfBusCable.get(busCable));
-				changePropagationDueToHardwareChange.getBusCableModifications().add(modifyBusCable);
-			}
-		}
-		
-	protected void calculateAndMarkSignalInterfaceChangen(APSArchitectureVersion version) {
-		boolean hasChanged = false;
-		do{
-			siPropagation = new SignalInterfacePropagation(version);
-			Collection<ModifyInterface<Interface>> markedInterfaceChanges = changePropagationDueToHardwareChange.getInterfaceModifications();
-			Map<Component, Set<ModifyInterface<Interface>>> changes = APSArchitectureModelLookup.lookUpChangesBasedOnSignalInterfaces(version, markedInterfaceChanges);
-			for(Component key : changes.keySet()){
-				siPropagation.markChangesBasedOnSignalInterfaces(key, changePropagationDueToHardwareChange, hasChanged);
-			}
-		}while(hasChanged);
 	}
 			
 	protected void addAllChangePropagations(APSArchitectureVersion version){

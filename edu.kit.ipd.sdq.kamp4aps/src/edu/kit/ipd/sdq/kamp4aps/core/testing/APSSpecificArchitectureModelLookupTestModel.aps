@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aPS:Plant xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ComponentRepository="edu.kit.ipd.sdq.kaps.xppu.componentrepository" xmlns:InterfaceRepository="edu.kit.ipd.sdq.kaps.xppu.interfacerepository" xmlns:aPS="edu.kit.ipd.sdq.kamp4aps.aps" id="_XwXLsK-EEemjx_6iTdnU_A">
+  <structures id="_Yc6IoK-EEemjx_6iTdnU_A" Name="S">
+    <modules id="_d1f98a-EEemjx_6iTdnU_A" Name="M">
+      <components id="_yyhKf6-EEemjx_6iTdnU_A" Name="C1"/>
+      <components xsi:type="ComponentRepository:OpticalSensor" id="_yqbwFK-FEemjx_6iTdnU_A" Name="C2"/>
+    </modules>
+  </structures>
+  <interfaceRepository id="_MEkLma-HEemjx_6iTdnU_A">
+    <allInterfacesInPlant xsi:type="InterfaceRepository:Screwing" id="_M1TsAa-HEemjx_6iTdnU_A" Name="C2_To_S" parentElement="_yqbwFK-FEemjx_6iTdnU_A _Yc6IoK-EEemjx_6iTdnU_A"/>
+  </interfaceRepository>
+</aPS:Plant>
