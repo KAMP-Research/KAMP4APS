@@ -39,7 +39,7 @@ public class APSDifferenceCalculation extends AbstractDifferenceCalculation<APSA
 	private APSArchitectureVersion version;
 	
 	@Override
-	protected void checkForDifferencesAndAddToWorkplan(Diff diffElement, List<Activity> workplan) {
+	public void checkForDifferencesAndAddToWorkplan(Diff diffElement, List<Activity> workplan) {
 		for (APSActivityElementType elementType : APSActivityElementType.topLevelAPSActivityElementTypes()) {
 			if (detectionRuleAdded(diffElement, elementType.getElementClass())) {
 				NamedElement architectureElement = (NamedElement) (((ReferenceChange) diffElement).getValue());
@@ -105,12 +105,13 @@ public class APSDifferenceCalculation extends AbstractDifferenceCalculation<APSA
 		for(Activity activity : plantActivities){
 			isContained = false;
 			for(Activity tmpActivity : newActivities){
-				if(tmpActivity.getElementName() == null || activity.getElementName() == null)
-					System.out.println("gnah");
-				if(tmpActivity.getElementName().equals(activity.getElementName()))
+				if (tmpActivity == null || activity == null) {
+					continue;
+				}
+				if(tmpActivity.getElementName() != null && activity.getElementName() != null && 
+						tmpActivity.getElementName().equals(activity.getElementName()))
 					isContained = true;
 			}
-			
 			if(!isContained)
 				newActivities.add(activity);
 		}
